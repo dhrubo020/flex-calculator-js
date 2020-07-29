@@ -1,0 +1,111 @@
+*{
+    box-sizing: border-box;
+}
+.ui{
+    margin: 5% 35%;
+    width: 250px;
+    height: 500px;
+    border: 5px solid black;
+    border-radius: 15px;
+    background-image: linear-gradient(45deg,rgb(5, 74, 153),rgb(8, 48, 93));
+}
+.top{
+    margin-left: 10px;
+    color: white;
+}
+.icon{
+    float: right;
+    margin-top: -4px;
+    margin-right: -5px;
+}
+.time{
+    float: left;
+    font-size: small;
+}
+.ear{
+    width: 50px;
+    height: 6px;
+    border-radius: 10px;
+    background-color: black;
+    margin-top: 5px;
+}
+/* display */
+.display{
+    height: 220px;
+}
+.input{
+    font-size: x-large;
+    text-align: right;
+    width: 230px;
+    height: 110px;
+    color:white;
+    background-color: transparent;
+    border: none;
+}
+/* btn-layout */
+
+.button{
+    text-align: center;
+    color: white;
+    font-size: larger;
+    font-weight: 200;
+    width: 30px;
+    height: 30px;
+    background-color:;
+    margin: 5px 5px;
+}
+/* brace */
+.brace{
+    color: white;
+    font-size: larger;
+    background: rgb(8, 48, 93);
+    border-radius: 15px;
+    text-align: center;
+}
+/* row btn items */
+.row-btn{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0px;
+}
+.number{
+    display: flex;
+    flex-wrap: wrap;
+    flex: 55%;
+}
+.number > .button{
+    margin: -2px -2px 13px 11px;
+}
+.operator{
+    display: flex;
+    flex-wrap: wrap;
+    flex: 45%;
+}
+.operator > .button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-image: linear-gradient(45deg, rgb(123, 173, 255),rgb(91, 135, 238));
+}
+.plus{
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px !important;
+}
+.equal{
+    width: 70px;
+    border-radius: 20px !important;
+}
+.mod{
+    margin-left: 45px;
+    margin-top: -35px;
+}
+.btn:hover{
+    font-weight: 600;
+    color: yellow;
+}
