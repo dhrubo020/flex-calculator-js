@@ -1,6 +1,6 @@
-function print(){
-    for(var i=0; i<arguments.length; i++){
-        console.log(arguments[i]+" ");
+function print() {
+    for (var i = 0; i < arguments.length; i++) {
+        console.log(arguments[i] + " ");
     }
 }
 //-----------------------
@@ -9,126 +9,114 @@ window.onload = function () {
     //code starting from here
     var number = "";
     var point = 0;
-    var sign = "";
     var arr = [];
     var now = "";
-    
-    function makeNumber(value){
-        print(value);
-        if(value == "."){
-            number = number+".";
-        }else{
-            number = number+value;
-        }
-        // let view = "";
-        // for(var i=0; i<arr.length; i++){
-        //     if(arr[i]!= "="){
-        //         view = view+arr[i];
-        //     }
-        // }
-        document.getElementById("display").value += number;
+    var count = 0;
+
+    function makeNumber(value) {
+        number = number + value;
+        document.getElementById("display").value = number;
     }
-    function setUp(operator){
-        if(number != ""){
-            arr.push(number);
+    function setUp(operator) {
+        
+        // push the number
+        if (number != "") {
+            if (number != ".") {
+                arr.push(number);
+            }
             number = "";
         }
-        if(arr[arr.length-1] >= "0" && arr[arr.length-1] <="9"){
+
+        // for first + - number
+        var operatorPush = 0; // handling first + - operator 
+        if ((operator == "-") && (arr.length == 0)) {
+            arr.push(operator);
+            operatorPush = 1;
+        }
+
+        // push operator if there is a number before it   
+        var checkNumber = parseFloat(arr[arr.length - 1]);
+        print("checkNumber " + checkNumber);
+        if (!isNaN(checkNumber) && operator != "=" && operator != "<" && operatorPush == 0) {
             arr.push(operator);
         }
-        
+
         let view = "";
-        for(var i=0; i<arr.length; i++){
-            if(arr[i]!= "="){
-                view = view+arr[i];
-            }
+        for (var i = 0; i < arr.length; i++) {
+            view = view + arr[i];
+            print("i " + arr[i]);
         }
         //now = document.getElementById("display").value;
         document.getElementById("display").value = view;
         point = 0;
     }
 
-    function calculate(){
+    function calculate() {
         point = 0;
         var ans = 0;
-        var before = parseFloat(arr[0]);
-        var after = "";
-        for(var i=0; i<arr.length; i++){
-            print(arr[i]);
+
+        // if last value of array is a operator then set last value=0
+        var checkNumber = parseFloat(arr[arr.length - 1]);
+        if (isNaN(checkNumber)) {
+            alert("Invalid input");
+            return ;
         }
-       for(var i=1; i<arr.length; i++){
-           after = parseFloat(arr[i+1]);
-        //    if(i%2==1){
-                var operator = arr[i];
-                if(operator == "+"){
-                    ans = before+after;
-                    before = ans;
-                }
-                else if(operator == "-"){
-                    ans = before - after;
-                    before = ans;
-                }
-                else if(operator == "x"){
-                    ans = before*after;
-                    before = ans;
-                }
-                else if(operator == "/"){
-                    ans = before / after;
-                    before = ans;
-                }
-        //    }
-           print(ans);
-       }
-        now = document.getElementById("display").value
-        print("now " +now);
-        now = eval(now);
-        print("now " +now);
-        ans = now;
-       document.getElementById("result").value = ans;
-        arr = [];
-        //arr.push(ans);
+
+        for (var i = 0; i < arr.length; i++) {
+            now += arr[i];
+        }
+        
+        print("now " + now);
+        ans = eval(now);
+        ans =ans.toFixed(4);
+        document.getElementById("result").value = ans;
         number = "";
+        now="";
     }
 
+    function clear(){
+        document.getElementById("display").value = "";
+        document.getElementById("result").value = "";
+        number = "";
+        now="";
+        arr = [];
+    }
+
+    // btn click
+    
     var classList = document.getElementsByClassName("btn");
     for (var i = 0; i < classList.length; i++) {
-        classList[i].addEventListener("click",function(){
-            previous = this.textContent;
-            this.value = previous;
-            print(this.value)
-
-            if(arr.length == 0){
-                document.getElementById("display").value="";
-                document.getElementById("result").value="";
+        classList[i].addEventListener("click", function () {
+            if(count > 0){
+                clear();
+                count=0;
             }
-            if(this.value >= "0" && this.value<="9"){
-                makeNumber(this.value);
+            var char = this.textContent;
+            print("btn click " + char)
+           
+            if (char >= "0" && char <= "9") {
+                makeNumber(char);
             }
 
-            else if(this.value == "." && point == 0){
-                makeNumber(this.value);
+            else if (char == "." && point == 0) {
+                makeNumber(char);
                 point = 1;
             }
-            else if(this.value=="(" || this.value==")" || this.value == "+" || this.value == "-" || this.value == "x" ||this.value == "/"){
-                setUp(this.value);
-                point = 1;
+            else if (char == "+" || char == "-" || char == "*" || char == "/") { 
+                setUp(char);
             }
-            else if(this.value == "="){
-                setUp(this.value);
+            else if (char == "=") {
+                setUp(char);
                 calculate();
+                count++;
             }
-            else if(this.value == "C"){
-                document.getElementById("display").value="";
-                document.getElementById("result").value="";
-                arr = [];
-                number = "";
+            else if (char == "C") {
+                clear();
             }
-            else if(this.value == "<"){
-            document.getElementById("result").value="";
-               var now =  document.getElementById("display").value.slice(0, -1);
-               document.getElementById("display").value = now;
+            else if (char == "<") {
+                clear();
             }
-            else{
+            else {
                 // ( ) btn
             }
         })
